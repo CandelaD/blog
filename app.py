@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 login_manager = LoginManager(app)
 
+<<<<<<< HEAD
 posts = []
 
 @app.route("/")
@@ -32,8 +33,10 @@ def new_post():
         return redirect(url_for('profile'))
     return render_template('new_post.html', form=form)
 
+=======
+>>>>>>> 8f03d37a3354d86f23546bbdb4d2c7319765b9bb
 @app.route("/signup/", methods=["GET", "POST"])
-def show_signup_form():
+def signup_form():
     form = SignupForm()
     if form.validate_on_submit():
         name = form.name.data
@@ -71,4 +74,8 @@ def load_user(user_id):
     for user in users:
         if user.id == int(user_id):
             return user
+<<<<<<< HEAD
     return None
+=======
+    return None
+>>>>>>> 8f03d37a3354d86f23546bbdb4d2c7319765b9bb
