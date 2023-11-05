@@ -10,9 +10,20 @@ body {
     height: 100vh;
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
 h1 {
     color: #333;
-    margin-bottom: 20px; /* Add some space below the h1 */
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
 }
 
 form {
@@ -22,7 +33,7 @@ form {
     width: 400px;
     margin: 0 auto;
     border-radius: 5px;
-    box-sizing: border-box; /* Include padding and borders in the width */
+    box-sizing: border-box;
 }
 
 input[type="text"],
@@ -34,7 +45,7 @@ input[type="submit"] {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box; /* Include padding and borders in the width */
+    box-sizing: border-box;
 }
 
 input[type="submit"] {

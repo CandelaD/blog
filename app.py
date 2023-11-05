@@ -1,15 +1,16 @@
 from urllib.parse import urlparse
 from flask import Flask, render_template, request, redirect, url_for
+from sqlalchemy import create_engine
 from forms import SignupForm, PostForm, LoginForm
 from flask_login import LoginManager
 from models import get_user, users
 from flask_login import LoginManager, current_user, login_user, logout_user
-from flask_login import login_required
+from flask_sqlalchemy import SQLAlchemy
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '2ed4fa9067c9a1db295e2c7c7bdd6f31'
-
-
-login_manager = LoginManager(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blog'
+db = SQLAlchemy(app)
 
 
 @app.route("/")
@@ -44,6 +45,8 @@ def signup_form():
             return redirect(next)
         return redirect(url_for('index'))
     return render_template("signup_form.html", form=form)
+
+login_manager = LoginManager(app)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
