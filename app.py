@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def index():
-    return render_template(index.html, posts=posts)
+    return ("inicio")
 
 @app.route('/post/new', methods=['GET', 'POST'])
 #@login_required
@@ -57,11 +57,14 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = get_user(form.email.data)
-        if user is not None and user.check_password(form.password.data):
+        if user and bcrypt.check_password_hash(user.possword, form.password.data):
             login_user(user, remember=form.remember_me.data)
             next_page = request.args.get('next')
             flash('you loggeg in successfully')
             return redirect(next_page if next_page else url_for(index))
+        else:
+            flash('email or password is wrong', 'danger')
+
     return render_template('login.html', form=form)
 
 @app.route('/logout')
