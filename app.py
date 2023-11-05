@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def index():
-    return ("inicio")
+    return ('index.html')
 
 @app.route('/post/new', methods=['GET', 'POST'])
 #@login_required
@@ -33,7 +33,7 @@ def new_post():
     return render_template('new_post.html', form=form)
 
 @app.route("/signup/", methods=["GET", "POST"])
-def signup_form():
+def signup():
     form = SignupForm()
     if form.validate_on_submit():
         name = form.name.data
@@ -44,7 +44,7 @@ def signup_form():
         if next:
             return redirect(next)
         return redirect(url_for('index'))
-    return render_template("signup_form.html", form=form)
+    return render_template('signup.html', form=form)
 
 login_manager = LoginManager(app)
 
