@@ -7,6 +7,8 @@ from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_login import login_required
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '2ed4fa9067c9a1db295e2c7c7bdd6f31'
+
 
 login_manager = LoginManager(app)
 
@@ -62,7 +64,7 @@ def login():
             if not next_page or urlparse(next_page).netloc != '':
                 next_page = url_for('index')
             return redirect(next_page)
-    return render_template('login_form.html', form=form)
+    return render_template('login.html', form=form)
 
 @app.route('/logout')
 def logout():
