@@ -2,7 +2,7 @@ from flask import Flask
 from flask import request
 from forms import SignupForm
 from flask_login import LoginManager
-from models.models import users
+from models import users
 
 
 app = Flask(__name__)
