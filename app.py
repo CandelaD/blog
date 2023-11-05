@@ -1,11 +1,10 @@
 from urllib.parse import urlparse
 from flask import Flask, render_template, request, redirect, url_for
-from forms import SignupForm
+from forms import SignupForm, PostForm, LoginForm
 from flask_login import LoginManager
 from models import get_user, users
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_login import login_required
-from .forms import PostForm
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '2ed4fa9067c9a1db295e2c7c7bdd6f31'
 
@@ -15,8 +14,7 @@ login_manager = LoginManager(app)
 
 @app.route("/")
 def index():
-    posts = Post.query.all()
-    return render_template(home.html, posts=posts)
+    return render_template(index.html, posts=posts)
 
 @app.route('/post/new', methods=['GET', 'POST'])
 #@login_required
@@ -50,16 +48,17 @@ def signup_form():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
+        flash('you already logged in')
         return redirect(url_for('index'))
-    form = SignupForm()
+
+    form = LoginForm()
     if form.validate_on_submit():
         user = get_user(form.email.data)
         if user is not None and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             next_page = request.args.get('next')
-            if not next_page or urlparse(next_page).netloc != '':
-                next_page = url_for('index')
-            return redirect(next_page)
+            flash('you loggeg in successfully')
+            return redirect(next_page if next_page else url_for(index))
     return render_template('login.html', form=form)
 
 @app.route('/logout')
@@ -73,3 +72,4 @@ def load_user(user_id):
         if user.id == int(user_id):
             return user
     return None
+
