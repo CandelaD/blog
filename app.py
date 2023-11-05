@@ -53,6 +53,3 @@ def load_user(user_id):
         if user.id == int(user_id):
             return user
     return None
-
-if __name__ == '__main__':
-    app.run(debug=True)
