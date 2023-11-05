@@ -5,22 +5,21 @@ from flask_login import LoginManager
 from models import get_user, users
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_login import login_required
-
+from .forms import PostForm
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '2ed4fa9067c9a1db295e2c7c7bdd6f31'
 
 
 login_manager = LoginManager(app)
 
-<<<<<<< HEAD
-posts = []
 
 @app.route("/")
 def index():
-    return "{} posts".format(len(posts))
+    posts = Post.query.all()
+    return render_template(home.html, posts=posts)
 
 @app.route('/post/new', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
@@ -29,14 +28,11 @@ def new_post():
             content=form.title.data,
             author=current_user
         )
-        db.session.add(post)
+        db.session.add(post) 
         db.session.commit()
         flash('post created')
-        return redirect(url_for('profile'))
     return render_template('new_post.html', form=form)
 
-=======
->>>>>>> 8f03d37a3354d86f23546bbdb4d2c7319765b9bb
 @app.route("/signup/", methods=["GET", "POST"])
 def signup_form():
     form = SignupForm()
@@ -76,8 +72,4 @@ def load_user(user_id):
     for user in users:
         if user.id == int(user_id):
             return user
-<<<<<<< HEAD
     return None
-=======
-    return None
->>>>>>> 8f03d37a3354d86f23546bbdb4d2c7319765b9bb
