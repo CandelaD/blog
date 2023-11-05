@@ -1,0 +1,4 @@
+2023-11-05 19:04:38.266 CET [30696] FATAL:  lock file "postmaster.pid" already exists
+2023-11-05 19:04:38.266 CET [30696] HINT:  Is another postmaster (PID 30676) running in data directory "/opt/homebrew/var/postgresql@14"?
+2023-11-05 19:05:19.663 CET [31575] FATAL:  lock file "postmaster.pid" already exists
+2023-11-05 19:05:19.663 CET [31575] HINT:  Is another postmaster (PID 30676) running in data directory "/opt/homebrew/var/postgresql@14"?
