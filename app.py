@@ -4,14 +4,33 @@ from forms import SignupForm
 from flask_login import LoginManager
 from models import get_user, users
 from flask_login import LoginManager, current_user, login_user, logout_user
+from flask_login import login_required
 
 app = Flask(__name__)
 
 login_manager = LoginManager(app)
 
-@app.route('/')
-def home():
-    return render_template('signup_form.html', form=SignupForm())
+posts = []
+
+@app.route("/")
+def index():
+    return "{} posts".format(len(posts))
+
+@app.route('/post/new', methods=['GET', 'POST'])
+@login_required
+def new_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(
+            title=form.title.data,
+            content=form.title.data,
+            author=current_user
+        )
+        db.session.add(post)
+        db.session.commit()
+        flash('post created')
+        return redirect(url_for('profile'))
+    return render_template('new_post.html', form=form)
 
 @app.route("/signup/", methods=["GET", "POST"])
 def show_signup_form():
@@ -53,6 +72,3 @@ def load_user(user_id):
         if user.id == int(user_id):
             return user
     return None
-
-if __name__ == '__main__':
-    app.run(debug=True)
