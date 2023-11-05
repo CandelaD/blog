@@ -1,8 +1,9 @@
-from flask import Flask
-from flask import request
+from flask import Flask, render_template, request, redirect, url_for
 from forms import SignupForm
 from flask_login import LoginManager
-from models import users
+from models import get_user
+from flask_login import LoginManager, current_user, login_user, logout_user
+from werkzeug.urls import url_parse
 
 
 app = Flask(__name__)
@@ -31,7 +32,7 @@ def show_signup_form():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
-    form = LoginForm()
+    form = SignupForm()
     if form.validate_on_submit():
         user = get_user(form.email.data)
         if user is not None and user.check_password(form.password.data):
