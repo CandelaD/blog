@@ -9,12 +9,8 @@ app = Flask(__name__)
 
 login_manager = LoginManager(app)
 
-@app.route('/')
-def home():
-    return render_template('signup_form.html', form=SignupForm())
-
 @app.route("/signup/", methods=["GET", "POST"])
-def show_signup_form():
+def signup_form():
     form = SignupForm()
     if form.validate_on_submit():
         name = form.name.data
