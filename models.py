@@ -14,7 +14,7 @@ class User(UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-    def __repr__(self):  #method for representing the objects in a class as a string, returns the printable representation of the specified object as a string.
+    def __repr__(self):
         return '<User {}>'.format(self.email)
 
 users = []
